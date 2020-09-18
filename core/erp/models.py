@@ -1,7 +1,38 @@
 from django.db import models
 from datetime import datetime
 
+class Type(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Nombre')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Tipo'
+        verbose_name_plural = 'Tipos'
+        ordering = ['id']
+        db_table = 'tipo'
+
+class Category(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Nombre')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
+        ordering = ['id']
+
 class Employee(models.Model):
+    # Si un "Tipo" se elimina, todos los "Empleados" que dependen de ese "Tipo" quedan con el campo en NULL
+    # type = models.ForeignKey(Type, on_delete=models.SET_NULL, null=True)
+    # No se puede eliminar un "Tipo" si algún "Empleado" depende de ese "Tipo"
+    # type = models.ForeignKey(Type, on_delete=models.PROTECT)
+
+    # Si un "Tipo" se elimina, todos los "Empleados" que dependen de ese "Tipo" se eliminan
+    type = models.ForeignKey(Type, on_delete=models.CASCADE)
+    categ = models.ManyToManyField(Category)
     names = models.CharField(max_length=150, verbose_name='Nombres')
     dni = models.CharField(max_length=10, unique=True, verbose_name='Dni')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
@@ -20,6 +51,7 @@ class Employee(models.Model):
         verbose_name = 'Empleado'
         verbose_name_plural = 'Empleados'
         db_table = 'empleado'
-        ordering = ['id'] # orden ascedente
+        # orden ascedente
+        ordering = ['id']
         # ordering = ['-id'] => orden descendente
 
