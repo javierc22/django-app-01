@@ -3,4 +3,9 @@ from django.shortcuts import render
 
 
 def myfirstview(request):
-    return HttpResponse('Primera url')
+    data = {
+        'name': 'Javier'
+    }
+
+    return render(request, 'index.html', data)
+
