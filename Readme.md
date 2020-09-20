@@ -14,3 +14,7 @@ Crear super usuario para administrador
 ~~~
 python manage.py createsuperuser
 ~~~
+
+Plantilla Admin
+* https://adminlte.io/docs/3.0/
+
