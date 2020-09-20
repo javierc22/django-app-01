@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-    <p>{{ name }}</p>
+<ul>
+    {% for category in categories %}
+        <li>{{ category.name }}</li>
+    {% endfor %}
+</ul>
+
+<p>{{ name }}</p>
 </body>
 </html>
